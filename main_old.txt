@@ -1,0 +1,60 @@
+package main
+
+import (
+	"fmt"
+	"github.com/goml/gobrain"
+	"github.com/petar/GoMNIST"
+)
+
+func createFloatArr(b []byte) []float64 {
+	var res []float64
+
+	for _, v := range b {
+		res = append(res, float64(v))
+	}
+	return res
+}
+func createAnsArr(l GoMNIST.Label) []float64 {
+	res := []float64{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	res[int(l)] = float64(1)
+	return res
+}
+
+func main() {
+	var (
+		patterns  [][][]float64
+		patterns1 [][][]float64
+	)
+	fmt.Println("hello world")
+	train, test, err := GoMNIST.Load("./src/github.com/petar/GoMNIST/data")
+	if err != nil {
+	}
+	fmt.Println(train.Count())
+	fmt.Println(test.Count())
+	for i := 0; i < 600; i++ {
+		image, label := train.Get(i)
+		patterns = append(patterns, [][]float64{createFloatArr(image), createAnsArr(label)})
+	}
+
+	//fmt.Println(patterns)
+	// instantiate the Feed Forward
+	ff := &gobrain.FeedForward{}
+
+	// initialize the Neural Network;
+	// the networks structure will contain:
+	// 2 inputs, 2 hidden nodes and 1 output.
+	ff.Init(784, 784, 10)
+	fmt.Println("Start train")
+	// train the network using the XOR patterns
+	// the training will run for 1000 epochs
+	// the learning rate is set to 0.6 and the momentum factor to 0.4
+	// use true in the last parameter to receive reports about the learning error
+	ff.Train(patterns, 10, 1, 0.4, true)
+
+	for i := 0; i < 10000; i++ {
+		image1, label1 := test.Get(i)
+		patterns1 = append(patterns1, [][]float64{createFloatArr(image1), createAnsArr(label1)})
+	}
+	ff.Test(patterns1)
+	//fmt.Println(label)
+}
