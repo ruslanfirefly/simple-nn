@@ -8,11 +8,8 @@ import (
 
 func random(a, b float64) float64 {
 	rand.Seed(time.Now().UnixNano())
-	res := float64(rand.Int31n(int32(b-a)))*rand.Float64() + a
-	if res == -1 {
-		return random(a, b)
-	}
-	return res
+	//return rand.Float64()
+	return float64(1)
 }
 
 func activateFunction(x float64) float64 {

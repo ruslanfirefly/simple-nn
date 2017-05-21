@@ -32,17 +32,29 @@ func main() {
 	}
 	fmt.Println(train.Count())
 	fmt.Println(test.Count())
-	// get train patters
-	for i := 0; i < 600; i++ {
-		image, label := train.Get(i)
-		patterns = append(patterns, [][]float64{createFloatArr(image), createAnsArr(label)})
+	//get train patters
+	//for i := 0; i < 60; i++ {
+	//	image, label := train.Get(i)
+	//	patterns = append(patterns, [][]float64{createFloatArr(image), createAnsArr(label)})
+	//}
+	patterns = [][][]float64{
+		{{0, 0, 0}, {0, 1}},
+		{{0, 0, 1}, {1, 0}},
+		{{0, 1, 1}, {0, 1}},
+		{{1, 1, 1}, {0, 1}},
+		{{1, 1, 0}, {0, 1}},
+		{{1, 0, 0}, {1, 0}},
+		{{1, 0, 1}, {1, 0}},
+		{{0, 1, 0}, {0, 1}},
 	}
-	ff.Init(784, 10, []int{350, 150, 70, 30 ,15}, 0.5)
-	ff.Train(patterns, 1000)
+	//ff.Init(784, 10, []int{10, 5}, 0.5)
+	ff.Init(3, 2, []int{2,2}, 0.1)
+	ff.Train(patterns, 1, true)
 
 	for i := 0; i < 10000; i++ {
 		image1, label1 := test.Get(i)
 		patterns1 = append(patterns1, [][]float64{createFloatArr(image1), createAnsArr(label1)})
 	}
-	ff.Test(patterns1)
+
+	ff.Test(patterns)
 }

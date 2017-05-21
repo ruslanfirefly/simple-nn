@@ -3,6 +3,7 @@ package ff
 import (
 	"fmt"
 	"github.com/gonum/matrix/mat64"
+	"math"
 )
 
 type FeedForward struct {
@@ -15,12 +16,20 @@ type FeedForward struct {
 	LRate        float64
 }
 
+func countError(s []float64, d float64) float64 {
+	var res float64
+	for _, v := range s {
+		res += v * d
+	}
+	return res
+}
+
 func applySigm(i, j int, v float64) float64 {
 	return activateFunction(v)
 }
 
 func (ff *FeedForward) Init(inputNodes, OutputNodes int, layers []int, lRate float64) {
-	ff.InputNodes = inputNodes + 1 //+ bias
+	ff.InputNodes = inputNodes
 	ff.OutputNodes = OutputNodes
 	fl := ff.InputNodes
 	ff.Layers = layers
@@ -33,12 +42,12 @@ func (ff *FeedForward) Init(inputNodes, OutputNodes int, layers []int, lRate flo
 	sum = sum + (fl * ff.OutputNodes)
 	ff.Weights = make([]float64, sum)
 	for i := 0; i < len(ff.Weights); i++ {
-		ff.Weights[i] = random(-1, 1)
+		ff.Weights[i] = random(0, 1)
 	}
 }
 func (ff *FeedForward) Predict(pattern []float64) []float64 {
 	var result_itog mat64.Dense
-	updatedPattern := append(pattern, 1)
+	updatedPattern := pattern
 	initMat := mat64.NewDense(1, len(updatedPattern), updatedPattern)
 	fl := ff.InputNodes
 	split := 0
@@ -59,7 +68,7 @@ func (ff *FeedForward) Predict(pattern []float64) []float64 {
 
 func (ff *FeedForward) predict_for_train(pattern []float64) {
 	var result_itog mat64.Dense
-	updatedPattern := append(pattern, 1)
+	updatedPattern := pattern
 	initMat := mat64.NewDense(1, len(updatedPattern), updatedPattern)
 	ff.wMatrix = append(ff.wMatrix, *initMat)
 	fl := ff.InputNodes
@@ -92,41 +101,97 @@ func (ff *FeedForward) backPropagation(targets []float64) {
 			if len(ff.wMatrix)-2 == cnt {
 				err_lay = append(err_lay, res[k]-targets[k])
 			} else {
-				err_lay = append(err_lay, res[k]*delta_w[k])
+				err_lay = append(err_lay, countError(ff.wMatrix[cnt+2].RowView(k).RawVector().Data, delta_w[k]))
 			}
 		}
 		delta_w = nil
+		_, col := ff.wMatrix[cnt].Caps()
+		delta_w = make([]float64, col)
 		ff.wMatrix[cnt].Apply(
 			func(i, j int, v float64) float64 {
-				prev_res := ff.wMatrix[cnt-1].RawRowView(0)
 				gradient_lay := dActivateFunction(res[j])
-				delta_w = append(delta_w, err_lay[j]*gradient_lay)
-				return v - (prev_res[j] * delta_w[j] * ff.LRate)
+				delta_w[j] = err_lay[j] * gradient_lay
+				return v - (res[j] * delta_w[j] * ff.LRate)
 			}, &ff.wMatrix[cnt])
 	}
+
 	var newW []float64
 	for i := 1; i < len(ff.wMatrix); i += 2 {
-		r, _ := ff.wMatrix[i].Caps()
-		for k := 0; k < r; k++ {
-			row := ff.wMatrix[i].RawRowView(k)
-			newW = append(newW, row...)
-		}
+		newW = append(newW, ff.wMatrix[i].RawMatrix().Data...)
 	}
-	ff.Weights = newW
+	copy(ff.Weights, newW)
 }
 
-func (ff *FeedForward) Train(patterns [][][]float64, epohe int) {
+//func (ff *FeedForward) backPropagation2(targets []float64) {
+//	targetM := mat64.NewDense(1, len(targets), targets)
+//	var tempMatrix *mat64.Dense
+//	for cnt := len(ff.wMatrix) - 2; cnt >= 1; cnt -= 2 {
+//		var (
+//			error_layer         mat64.Dense
+//			gradient_layer      mat64.Dense
+//			weights_delta_layer mat64.Dense
+//		)
+//		res := ff.wMatrix[cnt+1]
+//		if cnt == len(ff.wMatrix)-2 {
+//			error_layer.Sub(&res, targetM)
+//		} else {
+//			error_layer.Mul(tempMatrix, ff.wMatrix[cnt+2].T())
+//		}
+//
+//		gradient_layer.Apply(func(i, j int, v float64) float64 {
+//			return dActivateFunction(v)
+//		}, &ff.wMatrix[cnt+1])
+//
+//		if cnt == len(ff.wMatrix)-2 {
+//			weights_delta_layer.Mul(error_layer.T(), &gradient_layer)
+//		} else {
+//			weights_delta_layer.Mul(&gradient_layer, error_layer.T())
+//		}
+//		weights_delta_layer.Apply(func(i, j int, v float64) float64 {
+//			return v * ff.LRate
+//		}, &weights_delta_layer)
+//
+//		if cnt == len(ff.wMatrix)-2 {
+//			ff.wMatrix[cnt].Sub(&ff.wMatrix[cnt], weights_delta_layer.T())
+//		} else {
+//			fmt.Println("##########")
+//			fmt.Println(ff.wMatrix[cnt])
+//			fmt.Println(weights_delta_layer)
+//			fmt.Println("##########")
+//			ff.wMatrix[cnt].Sub(&ff.wMatrix[cnt], weights_delta_layer.T())
+//		}
+//		tempMatrix = &weights_delta_layer
+//
+//	}
+//
+//	//var newW []float64
+//	//for i := 1; i < len(ff.wMatrix); i += 2 {
+//	//	newW = append(newW, ff.wMatrix[i].RawMatrix().Data...)
+//	//}
+//	//copy(ff.Weights, newW)
+//}
+
+func (ff *FeedForward) Train(patterns [][][]float64, epohe int, debug bool) {
 	for i := 0; i < epohe; i++ {
+		sum := float64(0)
 		for _, v := range patterns {
 			ff.predict_for_train(v[0])
 			ff.backPropagation(v[1])
+
+			res := ff.wMatrix[len(ff.wMatrix)-1].RawRowView(0)
+			for key, value := range v[1] {
+				sum += 0.5 * math.Pow((res[key]-value), 2)
+			}
 			ff.wMatrix = nil
+		}
+		if debug {
+			fmt.Println("Middle Error after ", i, " epohe", sum/float64(len(patterns)))
 		}
 	}
 
 }
 
-func (nn *FeedForward) Test(patterns [][][]float64) {
+func (ff *FeedForward) Test(patterns [][][]float64) {
 	correct := 0
 	err := 0
 	for _, p := range patterns {
@@ -134,7 +199,7 @@ func (nn *FeedForward) Test(patterns [][][]float64) {
 		res := float64(0)
 		key1 := 0
 		res1 := float64(0)
-		for k, v := range nn.Predict(p[0]) {
+		for k, v := range ff.Predict(p[0]) {
 			if v > float64(res) {
 				res = v
 				key = k
@@ -151,6 +216,9 @@ func (nn *FeedForward) Test(patterns [][][]float64) {
 		} else {
 			err++
 		}
+		//fmt.Println(ff.Predict(p[0]))
+		//fmt.Println(p[1])
 	}
+
 	fmt.Println("correct: ", correct, "error: ", err)
 }
