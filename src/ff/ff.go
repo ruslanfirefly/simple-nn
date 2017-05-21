@@ -16,16 +16,23 @@ type FeedForward struct {
 	LRate        float64
 }
 
-func countError(s []float64, d float64) float64 {
-	var res float64
-	for _, v := range s {
-		res += v * d
+func countError(s mat64.Dense, d []float64) []float64 {
+	s.Apply(func(i, j int, v float64) float64 {
+		return v * d[j]
+	}, &s)
+	c, _ := s.Caps()
+	res := make([]float64, c)
+	for i := 0; i < c; i++ {
+		col := s.RowView(i).RawVector().Data
+		for _, value := range col {
+			res[i] += value
+		}
 	}
 	return res
 }
 
 func applySigm(i, j int, v float64) float64 {
-	return activateFunction(v)
+	return sigmoid(v)
 }
 
 func (ff *FeedForward) Init(inputNodes, OutputNodes int, layers []int, lRate float64) {
@@ -90,6 +97,7 @@ func (ff *FeedForward) predict_for_train(pattern []float64) {
 
 	ff.wMatrix = append(ff.wMatrix, *secondMatrix)
 	ff.wMatrix = append(ff.wMatrix, result_itog)
+
 }
 
 func (ff *FeedForward) backPropagation(targets []float64) {
@@ -97,19 +105,24 @@ func (ff *FeedForward) backPropagation(targets []float64) {
 	for cnt := len(ff.wMatrix) - 2; cnt >= 1; cnt -= 2 {
 		var err_lay []float64
 		res := ff.wMatrix[cnt+1].RawRowView(0)
-		for k := 0; k < len(res); k++ {
-			if len(ff.wMatrix)-2 == cnt {
-				err_lay = append(err_lay, res[k]-targets[k])
-			} else {
-				err_lay = append(err_lay, countError(ff.wMatrix[cnt+2].RowView(k).RawVector().Data, delta_w[k]))
+
+		if len(ff.wMatrix)-2 == cnt {
+			for k := 0; k < len(res); k++ {
+				err_lay = append(err_lay, targets[k]-res[k])
 			}
+		} else {
+			fmt.Println(len(delta_w))
+			fmt.Println(ff.wMatrix[cnt+2])
+			err_lay = countError(ff.wMatrix[cnt+2], delta_w)
 		}
+
 		delta_w = nil
 		_, col := ff.wMatrix[cnt].Caps()
 		delta_w = make([]float64, col)
+
 		ff.wMatrix[cnt].Apply(
 			func(i, j int, v float64) float64 {
-				gradient_lay := dActivateFunction(res[j])
+				gradient_lay := dsigmoid(res[j])
 				delta_w[j] = err_lay[j] * gradient_lay
 				return v - (res[j] * delta_w[j] * ff.LRate)
 			}, &ff.wMatrix[cnt])
@@ -119,7 +132,9 @@ func (ff *FeedForward) backPropagation(targets []float64) {
 	for i := 1; i < len(ff.wMatrix); i += 2 {
 		newW = append(newW, ff.wMatrix[i].RawMatrix().Data...)
 	}
+
 	copy(ff.Weights, newW)
+
 }
 
 //func (ff *FeedForward) backPropagation2(targets []float64) {
@@ -182,6 +197,7 @@ func (ff *FeedForward) Train(patterns [][][]float64, epohe int, debug bool) {
 			for key, value := range v[1] {
 				sum += 0.5 * math.Pow((res[key]-value), 2)
 			}
+
 			ff.wMatrix = nil
 		}
 		if debug {
@@ -216,8 +232,8 @@ func (ff *FeedForward) Test(patterns [][][]float64) {
 		} else {
 			err++
 		}
-		//fmt.Println(ff.Predict(p[0]))
-		//fmt.Println(p[1])
+		fmt.Println(ff.Predict(p[0]))
+		fmt.Println(p[1])
 	}
 
 	fmt.Println("correct: ", correct, "error: ", err)

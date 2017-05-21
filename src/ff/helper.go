@@ -8,16 +8,15 @@ import (
 
 func random(a, b float64) float64 {
 	rand.Seed(time.Now().UnixNano())
-	//return rand.Float64()
-	return float64(1)
+	return rand.Float64()
+	//return float64(1)
 }
 
-func activateFunction(x float64) float64 {
+func sigmoid(x float64) float64 {
 	// sigmoid
 	return 1 / (1 + math.Exp(-x))
 }
 
-func dActivateFunction(y float64) float64 {
-	// dsigmoid
+func dsigmoid(y float64) float64 {
 	return y * (1 - y)
 }

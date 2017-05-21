@@ -38,19 +38,20 @@ func main() {
 	//	patterns = append(patterns, [][]float64{createFloatArr(image), createAnsArr(label)})
 	//}
 	patterns = [][][]float64{
-		{{0, 0, 0}, {0, 1}},
-		{{0, 0, 1}, {1, 0}},
-		{{0, 1, 1}, {0, 1}},
-		{{1, 1, 1}, {0, 1}},
-		{{1, 1, 0}, {0, 1}},
-		{{1, 0, 0}, {1, 0}},
-		{{1, 0, 1}, {1, 0}},
-		{{0, 1, 0}, {0, 1}},
+		{{0, 0, 0, 0, 0}, {0, 1}},
+		{{0, 0, 0, 0, 1}, {1, 0}},
+		{{0, 1, 0, 0, 1}, {0, 1}},
+		{{1, 1, 0, 0, 1}, {0, 1}},
+		{{1, 1, 0, 0, 0}, {0, 1}},
+		{{1, 0, 0, 0, 0}, {1, 0}},
+		{{1, 0, 0, 0, 1}, {1, 0}},
+		{{0, 1, 0, 0, 0}, {0, 1}},
 	}
 	//ff.Init(784, 10, []int{10, 5}, 0.5)
-	ff.Init(3, 2, []int{2,2}, 0.1)
-	ff.Train(patterns, 1, true)
-
+	ff.Init(5, 2, []int{3, 2}, 0.05)
+	fmt.Println(ff.Weights)
+	ff.Train(patterns, 100, false)
+	fmt.Println(ff.Weights)
 	for i := 0; i < 10000; i++ {
 		image1, label1 := test.Get(i)
 		patterns1 = append(patterns1, [][]float64{createFloatArr(image1), createAnsArr(label1)})
