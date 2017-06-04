@@ -1,7 +1,6 @@
 package main
 
 import (
-	"ff"
 	"fmt"
 	"github.com/petar/GoMNIST"
 	"multiNN"
@@ -28,7 +27,7 @@ func main() {
 		Mnn            multiNN.MultiNN
 	)
 	digit := int(5)
-	fmt.Println("Start programm for recognition bumbers")
+	fmt.Println("Start programm for recognition numbers. For number: ", digit)
 	train, test, err := GoMNIST.Load("./src/github.com/petar/GoMNIST/data")
 	if err != nil {
 	}
@@ -41,24 +40,18 @@ func main() {
 			train_patterns = append(train_patterns, [][]float64{createFloatArr(image), createAnsArr(label)})
 		}
 	}
-	fmt.Println(len(train_patterns))
 	for i := 0; i < test.Count(); i++ {
 		image1, label1 := test.Get(i)
 		if int(label1) == digit {
 			test_patterns = append(test_patterns, [][]float64{createFloatArr(image1), createAnsArr(label1)})
 		}
 	}
+
 	fmt.Printf("Total trail collection for digit %d:  %d \n", digit, len(train_patterns))
-	fmt.Printf("Total trail collection for digit %d:  %d \n", digit, len(test_patterns))
+	fmt.Printf("Total test collection for digit %d:  %d \n", digit, len(test_patterns))
 
-	var ff, ff2 ff.FeedForward
-	ff.Init(784, 50, 30)
-	Mnn.NN = append(Mnn.NN, &ff)
-
-	ff2.Init(30, 15, 10)
-	Mnn.NN = append(Mnn.NN, &ff2)
-
+	Mnn.Init([][]int{{784, 50, 30}, {30, 15, 10}})
 	fmt.Println("Start train")
-	Mnn.Train(train_patterns, 500, 0.9, 0.1, true)
+	Mnn.Train(train_patterns, 11, 0.9, 0.1, true)
 	Mnn.Test(test_patterns)
 }

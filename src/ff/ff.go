@@ -12,6 +12,38 @@ type FeedForward struct {
 	InputActivations, HiddenActivations, OutputActivations []float64
 	InputWeights, OutputWeights                            [][]float64
 	InputChanges, OutputChanges                            [][]float64
+	AllWeights                                             []float64
+}
+
+func (nn *FeedForward) MatrixsToVector() {
+	nn.AllWeights = []float64{}
+	for i := 0; i < nn.NInputs; i++ {
+		for j := 0; j < nn.NHiddens; j++ {
+			nn.AllWeights = append(nn.AllWeights, nn.InputWeights[i][j])
+		}
+	}
+
+	for i := 0; i < nn.NHiddens; i++ {
+		for j := 0; j < nn.NOutputs; j++ {
+			nn.AllWeights = append(nn.AllWeights, nn.OutputWeights[i][j])
+		}
+	}
+}
+func (nn *FeedForward) VectorToMatrix() {
+	cnt := 0
+	for i := 0; i < nn.NInputs; i++ {
+		for j := 0; j < nn.NHiddens; j++ {
+			nn.InputWeights[i][j] = nn.AllWeights[cnt]
+			cnt++
+		}
+	}
+
+	for i := 0; i < nn.NHiddens; i++ {
+		for j := 0; j < nn.NOutputs; j++ {
+			nn.OutputWeights[i][j] = nn.AllWeights[cnt]
+			cnt++
+		}
+	}
 }
 
 func (nn *FeedForward) Init(inputs, hiddens, outputs int) {

@@ -6,7 +6,35 @@ import (
 )
 
 type MultiNN struct {
-	NN []*ff.FeedForward
+	NN                []*ff.FeedForward
+	AllWeightsNetwork []float64
+}
+
+func (ff *MultiNN) GetAllWeightsNetwork() {
+	ff.AllWeightsNetwork = []float64{}
+	for _, v := range ff.NN {
+		v.MatrixsToVector()
+		ff.AllWeightsNetwork = append(ff.AllWeightsNetwork, v.AllWeights...)
+	}
+}
+
+func (ff *MultiNN) SetAllWeightsNetwork() {
+	start := 0
+	for _, v := range ff.NN {
+		end := v.NInputs*v.NHiddens + v.NHiddens*v.NOutputs
+		v.AllWeights = []float64{}
+		v.AllWeights = append(v.AllWeights, ff.AllWeightsNetwork[start:start+end]...)
+		v.VectorToMatrix()
+		start = start + end
+	}
+}
+
+func (Mnn *MultiNN) Init(layers [][]int) {
+	for _, v := range layers {
+		ff := ff.FeedForward{}
+		ff.Init(v[0], v[1], v[2])
+		Mnn.NN = append(Mnn.NN, &ff)
+	}
 }
 
 func (ff *MultiNN) Update(patern []float64) []float64 {
