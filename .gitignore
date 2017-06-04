@@ -18,3 +18,5 @@
 /src/github.com/
 /pkg/
 ./.idea/
+.idea/inspectionProfiles/
+.idea/vcs.xml
