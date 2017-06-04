@@ -154,8 +154,8 @@ func (nn *FeedForward) Train(patterns [][][]float64, iterations int, lRate, mFac
 
 		errors[i] = e
 
-		if debug && i%100 == 0 {
-			fmt.Println(i, e)
+		if debug && i%10 == 0 {
+			fmt.Printf("Iteraton: %d, Avg. Error: %f \n", i, e)
 		}
 	}
 
@@ -190,5 +190,5 @@ func (nn *FeedForward) Test(patterns [][][]float64) {
 		fmt.Println(nn.Predict(p[0]))
 		fmt.Println(p[1])
 	}
-	fmt.Println("correct: ", correct, "error: ", err)
+	fmt.Printf("Found correctly: %d, Found wrong: %d \n", correct, err)
 }
