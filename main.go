@@ -15,6 +15,9 @@ var (
 	train_patterns [][][]float64
 	test_patterns  [][][]float64
 	index          int
+	//NetworkSize    = [][]int{{784, 50, 30}, {30, 15, 10}}
+	//NetworkSize    = [][]int{{784, 500, 10}}
+	NetworkSize    = [][]int{{784, 300, 150},{150, 70, 30}, {30, 15, 10}}
 )
 
 func createFloatArr(b []byte) []float64 {
@@ -35,7 +38,7 @@ type Vector []float64
 
 func (X Vector) Evaluate() float64 {
 	var Mnn1 multiNN.MultiNN
-	Mnn1.Init([][]int{{784, 50, 10}})
+	Mnn1.Init(NetworkSize)
 	Mnn1.AllWeightsNetwork = []float64{}
 	Mnn1.AllWeightsNetwork = append(Mnn1.AllWeightsNetwork, []float64(X)...)
 	Mnn1.SetAllWeightsNetwork()
@@ -62,12 +65,12 @@ func MakeVector(rng *rand.Rand) gago.Genome {
 }
 
 func init() {
-	Mnn.Init([][]int{{784, 50, 10}})
+	Mnn.Init(NetworkSize)
 	Mnn.GetAllWeightsNetwork()
 }
 
 func main() {
-	backPropagation := false
+	backPropagation := !true
 	digit := int(5)
 	fmt.Println("Start programm for recognition numbers. For number: ", digit)
 	train, test, err := GoMNIST.Load("./src/github.com/petar/GoMNIST/data")
@@ -78,12 +81,10 @@ func main() {
 	//get train patters
 	for i := 0; i < train.Count(); i++ {
 		image, label := train.Get(i)
-		if int(label) == digit {
+	 	if int(label) == digit {
 			train_patterns = append(train_patterns, [][]float64{createFloatArr(image), createAnsArr(label)})
 		}
-		if len(train_patterns) == 2 {
-			break
-		}
+
 	}
 	for i := 0; i < test.Count(); i++ {
 		image1, label1 := test.Get(i)
@@ -97,6 +98,7 @@ func main() {
 
 	if backPropagation {
 		fmt.Println("Start train")
+		Mnn.Test(test_patterns)
 		startTime := time.Now()
 		Mnn.Train(train_patterns, 11, 0.9, 0.1, true)
 		endTime := time.Now().Sub(startTime)
@@ -106,16 +108,27 @@ func main() {
 		fmt.Println("test")
 		var ga = gago.Generational(MakeVector)
 		ga.NPops = 1
+		ga.PopSize = 5
 		ga.Initialize()
+
 		fmt.Printf("Population: %d \n", ga.PopSize)
 		fmt.Printf("Best fitness at generation 0: %e\n", ga.Best.Fitness)
-		for i := 0; i < 12; i++ {
+
+		Mnn.AllWeightsNetwork = []float64{}
+		Mnn.AllWeightsNetwork = append(Mnn.AllWeightsNetwork, []float64(ga.Best.Genome.(Vector))...)
+		Mnn.SetAllWeightsNetwork()
+		Mnn.Test(test_patterns)
+		startTime := time.Now()
+		for i := 0; i < 1; i++ {
 			for index = 0; index < len(train_patterns); index++ {
 				ga.Enhance()
 			}
 			fmt.Printf("Best fitness at generation %d: %e\n", i, ga.Best.Fitness)
 		}
+		endTime := time.Now().Sub(startTime)
+		fmt.Printf("Time for education %f \n", endTime.Seconds())
 		fmt.Printf("Best fitness at final generation : %e\n", ga.Best.Fitness)
+
 		Mnn.AllWeightsNetwork = []float64{}
 		Mnn.AllWeightsNetwork = append(Mnn.AllWeightsNetwork, []float64(ga.Best.Genome.(Vector))...)
 		Mnn.SetAllWeightsNetwork()

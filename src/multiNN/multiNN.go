@@ -81,8 +81,8 @@ func (nn *MultiNN) Train(patterns [][][]float64, iterations int, lRate, mFactor 
 
 		errors[i] = e
 
-		if debug && i%10 == 0 {
-			fmt.Printf("Iteraton: %d, Avg. Error: %f \n", i, e)
+		if debug {
+			fmt.Printf("Iteraton: %d, Avg. Error: %e \n", i, e)
 		}
 	}
 
@@ -114,7 +114,7 @@ func (nn *MultiNN) Test(patterns [][][]float64) {
 		} else {
 			err++
 		}
-
+	//fmt.Println(p[1], nn.Update(p[0]))
 	}
 	fmt.Printf("Found correctly: %d, Found wrong: %d \n", correct, err)
 }

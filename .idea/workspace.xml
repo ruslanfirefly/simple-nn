@@ -4,6 +4,8 @@
     <list default="true" id="b6546b02-b048-44e6-898e-184392c7a9b8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ff/ff.go" afterPath="$PROJECT_DIR$/src/ff/ff.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/multiNN/multiNN.go" afterPath="$PROJECT_DIR$/src/multiNN/multiNN.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,14 +17,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="117" column="57" lean-forward="false" selection-start-line="117" selection-start-column="57" selection-end-line="117" selection-end-column="57" />
+            <state relative-caret-position="-747">
+              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="e#14#129#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="multy_layer2.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/multy_layer2.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,8 +62,8 @@
       <file leaf-file-name="multiNN.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/multiNN/multiNN.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="42" column="19" lean-forward="true" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+            <state relative-caret-position="0">
+              <caret line="49" column="21" lean-forward="true" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
               <folding>
                 <element signature="e#17#40#0" expanded="true" />
               </folding>
@@ -59,58 +71,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_old.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_old.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="51" column="19" lean-forward="false" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ff.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ff.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ff/ff.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="78" column="49" lean-forward="false" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
+            <state relative-caret-position="246">
+              <caret line="170" column="16" lean-forward="false" selection-start-line="170" selection-start-column="16" selection-end-line="170" selection-end-column="16" />
               <folding>
-                <element signature="e#12#44#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vector.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/github.com/gonum/matrix/mat64/vector.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="feedforward.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/github.com/goml/gobrain/feedforward.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding>
-                <element signature="e#79#111#0" expanded="true" />
-                <element signature="e#196#607#0" expanded="false" />
-                <element signature="n#!!block;n#Init#0" expanded="false" />
-                <element signature="e#1284#1370#0" expanded="false" />
-                <element signature="e#1406#1493#0" expanded="false" />
-                <element signature="n#!!block;n#SetContexts#0" expanded="false" />
-                <element signature="n#!!block;n#Update#0" expanded="false" />
-                <element signature="e#3123#3202#0" expanded="false" />
-                <element signature="e#3298#3429#0" expanded="false" />
-                <element signature="n#!!block;n#BackPropagate#0" expanded="false" />
-                <element signature="e#4182#4416#0" expanded="false" />
-                <element signature="e#4700#4929#0" expanded="false" />
-                <element signature="n#!!block;n#Train#0" expanded="false" />
-                <element signature="n#!!block;n#Test#0" expanded="false" />
+                <element signature="e#12#90#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -179,9 +146,11 @@
         <option value="$PROJECT_DIR$/src/ff/helper.go" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/multy_layer2.txt" />
+        <option value="$PROJECT_DIR$/one_layer.txt" />
+        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/src/multiNN/multiNN.go" />
         <option value="$PROJECT_DIR$/src/ff/ff.go" />
-        <option value="$PROJECT_DIR$/main.go" />
       </list>
     </option>
   </component>
@@ -212,6 +181,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -276,7 +246,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -382,15 +351,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2657082" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2683706" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971016" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971016" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971016" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -415,36 +385,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="27" lean-forward="true" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
-          <folding>
-            <element signature="e#14#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ff/ff.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="122" column="27" lean-forward="false" selection-start-line="122" selection-start-column="27" selection-end-line="122" selection-end-column="27" />
-          <folding>
-            <element signature="e#12#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/Cellar/go/1.8.1/libexec/src/builtin/builtin.go" />
     <entry file="file://$PROJECT_DIR$/src/github.com/gonum/matrix/mat64/dense.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -457,7 +397,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -465,22 +404,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2490">
           <caret line="170" column="36" lean-forward="true" selection-start-line="170" selection-start-column="36" selection-end-line="170" selection-end-column="36" />
-          <folding>
-            <element signature="e#79#111#0" expanded="true" />
-            <element signature="e#196#607#0" expanded="false" />
-            <element signature="n#!!block;n#Init#0" expanded="false" />
-            <element signature="e#1284#1370#0" expanded="false" />
-            <element signature="e#1406#1493#0" expanded="false" />
-            <element signature="n#!!block;n#SetContexts#0" expanded="false" />
-            <element signature="n#!!block;n#Update#0" expanded="false" />
-            <element signature="e#3123#3202#0" expanded="false" />
-            <element signature="e#3298#3429#0" expanded="false" />
-            <element signature="n#!!block;n#BackPropagate#0" expanded="false" />
-            <element signature="e#4182#4416#0" expanded="false" />
-            <element signature="e#4700#4929#0" expanded="false" />
-            <element signature="n#!!block;n#Train#0" expanded="false" />
-            <element signature="n#!!block;n#Test#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -505,7 +428,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -530,22 +452,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
           <caret line="52" column="46" lean-forward="false" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
-          <folding>
-            <element signature="e#79#111#0" expanded="true" />
-            <element signature="e#196#607#0" expanded="false" />
-            <element signature="n#!!block;n#Init#0" expanded="false" />
-            <element signature="e#1284#1370#0" expanded="false" />
-            <element signature="e#1406#1493#0" expanded="false" />
-            <element signature="n#!!block;n#SetContexts#0" expanded="false" />
-            <element signature="n#!!block;n#Update#0" expanded="false" />
-            <element signature="e#3123#3202#0" expanded="false" />
-            <element signature="e#3298#3429#0" expanded="false" />
-            <element signature="n#!!block;n#BackPropagate#0" expanded="false" />
-            <element signature="e#4182#4416#0" expanded="false" />
-            <element signature="e#4700#4929#0" expanded="false" />
-            <element signature="n#!!block;n#Train#0" expanded="false" />
-            <element signature="n#!!block;n#Test#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -554,7 +460,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -611,22 +516,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
           <caret line="213" column="0" lean-forward="false" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
-          <folding>
-            <element signature="e#79#111#0" expanded="true" />
-            <element signature="e#196#607#0" expanded="false" />
-            <element signature="n#!!block;n#Init#0" expanded="false" />
-            <element signature="e#1284#1370#0" expanded="false" />
-            <element signature="e#1406#1493#0" expanded="false" />
-            <element signature="n#!!block;n#SetContexts#0" expanded="false" />
-            <element signature="n#!!block;n#Update#0" expanded="false" />
-            <element signature="e#3123#3202#0" expanded="false" />
-            <element signature="e#3298#3429#0" expanded="false" />
-            <element signature="n#!!block;n#BackPropagate#0" expanded="false" />
-            <element signature="e#4182#4416#0" expanded="false" />
-            <element signature="e#4700#4929#0" expanded="false" />
-            <element signature="n#!!block;n#Train#0" expanded="false" />
-            <element signature="n#!!block;n#Test#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -635,7 +524,7 @@
         <state relative-caret-position="448">
           <caret line="140" column="13" lean-forward="true" selection-start-line="140" selection-start-column="13" selection-end-line="140" selection-end-column="13" />
           <folding>
-            <element signature="e#12#44#0" expanded="true" />
+            <element signature="e#12#90#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -644,7 +533,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="580">
           <caret line="57" column="22" lean-forward="false" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -662,7 +550,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -684,22 +571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
           <caret line="52" column="46" lean-forward="false" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
-          <folding>
-            <element signature="e#79#111#0" expanded="true" />
-            <element signature="e#196#607#0" expanded="false" />
-            <element signature="n#!!block;n#Init#0" expanded="false" />
-            <element signature="e#1284#1370#0" expanded="false" />
-            <element signature="e#1406#1493#0" expanded="false" />
-            <element signature="n#!!block;n#SetContexts#0" expanded="false" />
-            <element signature="n#!!block;n#Update#0" expanded="false" />
-            <element signature="e#3123#3202#0" expanded="false" />
-            <element signature="e#3298#3429#0" expanded="false" />
-            <element signature="n#!!block;n#BackPropagate#0" expanded="false" />
-            <element signature="e#4182#4416#0" expanded="false" />
-            <element signature="e#4700#4929#0" expanded="false" />
-            <element signature="n#!!block;n#Train#0" expanded="false" />
-            <element signature="n#!!block;n#Test#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -708,7 +579,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -755,7 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -771,7 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
           <caret line="51" column="19" lean-forward="false" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,22 +647,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#79#111#0" expanded="true" />
-            <element signature="e#196#607#0" expanded="false" />
-            <element signature="n#!!block;n#Init#0" expanded="false" />
-            <element signature="e#1284#1370#0" expanded="false" />
-            <element signature="e#1406#1493#0" expanded="false" />
-            <element signature="n#!!block;n#SetContexts#0" expanded="false" />
-            <element signature="n#!!block;n#Update#0" expanded="false" />
-            <element signature="e#3123#3202#0" expanded="false" />
-            <element signature="e#3298#3429#0" expanded="false" />
-            <element signature="n#!!block;n#BackPropagate#0" expanded="false" />
-            <element signature="e#4182#4416#0" expanded="false" />
-            <element signature="e#4700#4929#0" expanded="false" />
-            <element signature="n#!!block;n#Train#0" expanded="false" />
-            <element signature="n#!!block;n#Test#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -833,26 +685,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/multiNN/multiNN.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="42" column="19" lean-forward="true" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
-          <folding>
-            <element signature="e#17#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ff/ff.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="78" column="49" lean-forward="false" selection-start-line="78" selection-start-column="49" selection-end-line="78" selection-end-column="49" />
-          <folding>
-            <element signature="e#12#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/github.com/MaxHalford/gago/individual.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -861,12 +693,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/one_layer.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/multy_layer.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/multy_layer2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="117" column="57" lean-forward="false" selection-start-line="117" selection-start-column="57" selection-end-line="117" selection-end-column="57" />
+        <state relative-caret-position="-747">
+          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#14#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/multiNN/multiNN.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="49" column="21" lean-forward="true" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+          <folding>
+            <element signature="e#17#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ff/ff.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="170" column="16" lean-forward="false" selection-start-line="170" selection-start-column="16" selection-end-line="170" selection-end-column="16" />
+          <folding>
+            <element signature="e#12#90#0" expanded="true" />
           </folding>
         </state>
       </provider>

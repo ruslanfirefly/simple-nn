@@ -2,48 +2,29 @@ package ff
 
 import (
 	"fmt"
+	"github.com/gonum/matrix/mat64"
 	"log"
 	"math"
+	"math/rand"
 )
 
 type FeedForward struct {
 	NInputs, NHiddens, NOutputs                            int
 	Regression                                             bool
 	InputActivations, HiddenActivations, OutputActivations []float64
-	InputWeights, OutputWeights                            [][]float64
-	InputChanges, OutputChanges                            [][]float64
+	InputWeights, OutputWeights                            *mat64.Dense
+	InputChanges, OutputChanges                            *mat64.Dense
 	AllWeights                                             []float64
 }
 
 func (nn *FeedForward) MatrixsToVector() {
 	nn.AllWeights = []float64{}
-	for i := 0; i < nn.NInputs; i++ {
-		for j := 0; j < nn.NHiddens; j++ {
-			nn.AllWeights = append(nn.AllWeights, nn.InputWeights[i][j])
-		}
-	}
-
-	for i := 0; i < nn.NHiddens; i++ {
-		for j := 0; j < nn.NOutputs; j++ {
-			nn.AllWeights = append(nn.AllWeights, nn.OutputWeights[i][j])
-		}
-	}
+	nn.AllWeights = append(nn.AllWeights, nn.InputWeights.RawMatrix().Data...)
+	nn.AllWeights = append(nn.AllWeights, nn.OutputWeights.RawMatrix().Data...)
 }
 func (nn *FeedForward) VectorToMatrix() {
-	cnt := 0
-	for i := 0; i < nn.NInputs; i++ {
-		for j := 0; j < nn.NHiddens; j++ {
-			nn.InputWeights[i][j] = nn.AllWeights[cnt]
-			cnt++
-		}
-	}
-
-	for i := 0; i < nn.NHiddens; i++ {
-		for j := 0; j < nn.NOutputs; j++ {
-			nn.OutputWeights[i][j] = nn.AllWeights[cnt]
-			cnt++
-		}
-	}
+	nn.InputWeights = mat64.NewDense(nn.NInputs, nn.NHiddens, nn.AllWeights[0:(nn.NInputs*nn.NHiddens)])
+	nn.OutputWeights = mat64.NewDense(nn.NHiddens, nn.NOutputs, nn.AllWeights[(nn.NInputs*nn.NHiddens):((nn.NInputs*nn.NHiddens)+(nn.NHiddens*nn.NOutputs))])
 }
 
 func (nn *FeedForward) Init(inputs, hiddens, outputs int) {
@@ -55,23 +36,24 @@ func (nn *FeedForward) Init(inputs, hiddens, outputs int) {
 	nn.HiddenActivations = vector(nn.NHiddens, 1.0)
 	nn.OutputActivations = vector(nn.NOutputs, 1.0)
 
-	nn.InputWeights = matrix(nn.NInputs, nn.NHiddens)
-	nn.OutputWeights = matrix(nn.NHiddens, nn.NOutputs)
+	matrix1 := make([]float64, nn.NInputs*nn.NHiddens)
 
-	for i := 0; i < nn.NInputs; i++ {
-		for j := 0; j < nn.NHiddens; j++ {
-			nn.InputWeights[i][j] = random(-1, 1)
-		}
+	for i := range matrix1 {
+		matrix1[i] = rand.NormFloat64()
 	}
 
-	for i := 0; i < nn.NHiddens; i++ {
-		for j := 0; j < nn.NOutputs; j++ {
-			nn.OutputWeights[i][j] = random(-1, 1)
-		}
+	nn.InputWeights = mat64.NewDense(nn.NInputs, nn.NHiddens, matrix1)
+
+	matrix2 := make([]float64, nn.NHiddens*nn.NOutputs)
+
+	for i := range matrix2 {
+		matrix2[i] = rand.NormFloat64()
 	}
 
-	nn.InputChanges = matrix(nn.NInputs, nn.NHiddens)
-	nn.OutputChanges = matrix(nn.NHiddens, nn.NOutputs)
+	nn.OutputWeights = mat64.NewDense(nn.NHiddens, nn.NOutputs, matrix2)
+
+	nn.InputChanges = mat64.NewDense(nn.NInputs, nn.NHiddens, make([]float64, nn.NInputs*nn.NHiddens))
+	nn.OutputChanges = mat64.NewDense(nn.NHiddens, nn.NOutputs, make([]float64, nn.NHiddens*nn.NOutputs))
 }
 
 func (nn *FeedForward) Predict(inputs []float64) []float64 {
@@ -87,7 +69,7 @@ func (nn *FeedForward) Predict(inputs []float64) []float64 {
 		var sum float64
 
 		for j := 0; j < nn.NInputs; j++ {
-			sum += nn.InputActivations[j] * nn.InputWeights[j][i]
+			sum += nn.InputActivations[j] * nn.InputWeights.At(j, i)
 		}
 
 		nn.HiddenActivations[i] = sigmoid(sum)
@@ -96,7 +78,7 @@ func (nn *FeedForward) Predict(inputs []float64) []float64 {
 	for i := 0; i < nn.NOutputs; i++ {
 		var sum float64
 		for j := 0; j < nn.NHiddens; j++ {
-			sum += nn.HiddenActivations[j] * nn.OutputWeights[j][i]
+			sum += nn.HiddenActivations[j] * nn.OutputWeights.At(j, i)
 		}
 
 		nn.OutputActivations[i] = sigmoid(sum)
@@ -125,7 +107,7 @@ func (nn *FeedForward) BackPropagate(targets []float64, lRate, mFactor float64) 
 		var e float64
 
 		for j := 0; j < nn.NOutputs; j++ {
-			e += outputDeltas[j] * nn.OutputWeights[i][j]
+			e += outputDeltas[j] * nn.OutputWeights.At(i, j)
 		}
 
 		hiddenDeltas[i] = dsigmoid(nn.HiddenActivations[i]) * e
@@ -137,7 +119,7 @@ func (nn *FeedForward) BackPropagate(targets []float64, lRate, mFactor float64) 
 		var e float64
 
 		for j := 0; j < nn.NHiddens; j++ {
-			e += hiddenDeltas[j] * nn.InputWeights[i][j]
+			e += hiddenDeltas[j] * nn.InputWeights.At(i, j)
 		}
 
 		inputDeltas[i] = dsigmoid(nn.InputActivations[i]) * e
@@ -146,16 +128,16 @@ func (nn *FeedForward) BackPropagate(targets []float64, lRate, mFactor float64) 
 	for i := 0; i < nn.NHiddens; i++ {
 		for j := 0; j < nn.NOutputs; j++ {
 			change := outputDeltas[j] * nn.HiddenActivations[i]
-			nn.OutputWeights[i][j] = nn.OutputWeights[i][j] + lRate*change + mFactor*nn.OutputChanges[i][j]
-			nn.OutputChanges[i][j] = change
+			nn.OutputWeights.Set(i, j, nn.OutputWeights.At(i, j)+lRate*change+mFactor*nn.OutputChanges.At(i, j))
+			nn.OutputChanges.Set(i, j, change)
 		}
 	}
 
 	for i := 0; i < nn.NInputs; i++ {
 		for j := 0; j < nn.NHiddens; j++ {
 			change := hiddenDeltas[j] * nn.InputActivations[i]
-			nn.InputWeights[i][j] = nn.InputWeights[i][j] + lRate*change + mFactor*nn.InputChanges[i][j]
-			nn.InputChanges[i][j] = change
+			nn.InputWeights.Set(i, j, nn.InputWeights.At(i, j)+lRate*change+mFactor*nn.InputChanges.At(i, j))
+			nn.InputChanges.Set(i, j, change)
 		}
 	}
 
@@ -186,8 +168,8 @@ func (nn *FeedForward) Train(patterns [][][]float64, iterations int, lRate, mFac
 
 		errors[i] = e
 
-		if debug && i%10 == 0 {
-			fmt.Printf("Iteraton: %d, Avg. Error: %f \n", i, e)
+		if debug {
+			fmt.Printf("Iteraton: %d, Avg. Error: %e \n", i, e)
 		}
 	}
 
